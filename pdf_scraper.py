@@ -7,6 +7,7 @@ from pyPDF2 import PdfMerger
 import os
 # from pathlib import Path
 
+
 #Find all pdf docs from website
 def fetch_pdf_links(url):
     print(f"🕵🏻 Looking for PDFs at: {url}")
@@ -29,7 +30,9 @@ def fetch_pdf_links(url):
     except Exception as e:
         print(f"🙅🏻‍♂️ Error finding PDFs: {e}")
         return
-    
+
+
+#Download pdf from link
 def download_pdf(url, folder='temp_pdfs'):
     try:
         if not os.path.exists(folder):
@@ -56,4 +59,27 @@ def download_pdf(url, folder='temp_pdfs'):
     
     except Exception as e:
         print(f"🤷🏻‍♂️ Error downloading {url}: {e}")
+        return None
+    
+
+#Merge all pdfs
+def merge_pdfs(pdf_files, output_path = 'merged_output.pdf'):
+    try:
+        print(f"🥞 stacking the {len(pdf_files)} PDFs...")
+
+        merger = PdfMerger()
+
+        for pdf in pdf_files:
+            if pdf and os.path.exists(pdf):
+                print(f"🔗 Merged and linked: {pdf}")
+            merger.append(pdf)
+
+        merger.write(output_name)
+        merger.close()
+
+        print(f"👍🏼 Merged PDF saved as: {output_path}")
+        return output_path
+    
+    except Exception as e:
+        print(f"🤦🏻‍♂️ Error merging PDFs: {e}")
         return None
